@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 def home(request):
-    return HttpResponse("<h1>Bem-vindo à API de Transcrição de Áudio</h1>")
+    return HttpResponse("<h1> TESTE DE REQUISIÇÃO FUNCIONANDO</h1>")
 
 urlpatterns = [
     path('admin/', admin.site.urls),

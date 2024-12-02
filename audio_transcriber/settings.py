@@ -4,9 +4,6 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, '/media/')
-
 
 SECRET_KEY = 'django-insecure-5%p3sry1o(_(l7%$3d658*jwijsid!9*jo7@688th#z0^b7w02'
 
@@ -27,9 +24,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "rest_framework",
     "transcriber",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -37,6 +36,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+[
+    "127.0.0.1:3000/template/front_end.html",  # Front-end local
+    "http://localhost:5500", #para qnd eu quiser outro caminho de exibicao
 ]
 
 ROOT_URLCONF = 'audio_transcriber.urls'
@@ -102,7 +108,7 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-
-
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -4,16 +4,21 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import AudioFile
 from .serializers import AudioFileSerializer
+from django.shortcuts import render
+
+def front_end(request):
+    return render(request, 'front_end.html')
 
 class AudioTranscriptionView(APIView):
     def post(self, request):
+      
         serializer = AudioFileSerializer(data=request.data)
         if serializer.is_valid():
             audio_file = serializer.save()
-
+            
+ 
             recognizer = sr.Recognizer()
             audio_path = audio_file.audio.path
-
             try:
                 with sr.AudioFile(audio_path) as source:
                     audio_data = recognizer.record(source)
@@ -23,9 +28,5 @@ class AudioTranscriptionView(APIView):
                 return Response(AudioFileSerializer(audio_file).data, status=status.HTTP_200_OK)
             except Exception as e:
                 return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
+        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        print("request.data:", request.data)
-        print("request.FILES:", request.FILES)
-
